@@ -29,10 +29,15 @@ class AuthController extends Controller
         return back()->withInput(['email' => $request->email]);
     }
 
+
     public function logout()
     {
         Auth::logout();
-        Alert::success('Logout', 'Anda Berhasil Logout');
+        Alert::success('Berhasil', 'Logout berhasil')
+            ->autoclose(4000)
+            ->toToast()
+            ->timerProgressBar()
+            ->iconHtml('<i class="fa-solid fa-check"></i>');
         return redirect()->route('login');
     }
 }

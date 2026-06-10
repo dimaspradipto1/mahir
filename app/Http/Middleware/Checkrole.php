@@ -16,7 +16,7 @@ class Checkrole
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->role == "superadmin" || Auth::user()->role == "admin" || Auth::user()->role == 'pimpinan') {
+        if (Auth::user()->role == "superadmin" || Auth::user()->role == "admin" || Auth::user()->role == 'pimpinan' || Auth::user()->role == 'user') {
             return $next($request);
         } else {
             return redirect()->route('login');

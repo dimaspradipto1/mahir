@@ -18,9 +18,14 @@ return new class extends Migration
             $table->string('jenis');
             $table->year('tahun');
             $table->string('ketua_pengusul');
-            $table->string('total_diusulkan');
-            $table->string('total_disetujui');
+            $table->string('program_studi')->nullable();
+            $table->bigInteger('total_diusulkan');
+            $table->bigInteger('total_disetujui')->nullable();
+            $table->text('judul_deskripsi')->nullable();
+            $table->date('tanggal_pengajuan')->nullable();
+            $table->integer('durasi_bulan')->nullable();
             $table->string('status');
+            $table->string('link_dokumen')->nullable();
             $table->timestamps();
         });
     }
