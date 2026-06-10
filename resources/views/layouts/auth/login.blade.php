@@ -17,6 +17,7 @@
 </head>
 
 <body class="login-body">
+  @include('sweetalert::alert')
 
   {{-- ── Interactive Network Canvas Background ── --}}
   <canvas id="networkCanvas"></canvas>
@@ -55,34 +56,21 @@
         <p class="lcard-sub">Masuk menggunakan akun yang telah didaftarkan oleh administrator</p>
       </div>
 
-      {{-- Alerts --}}
-      @if(session('error'))
-      <div class="lcard-msg lcard-msg-err">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-        <span>{{ session('error') }}</span>
-      </div>
-      @endif
-
-      @if(session('success'))
-      <div class="lcard-msg lcard-msg-ok">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-        <span>{{ session('success') }}</span>
-      </div>
-      @endif
-
+      {{-- Alerts handle by SweetAlert --}}
+      
       {{-- Form --}}
-      <form class="lcard-form" method="POST" action="{{ route('login.post') }}" id="loginForm">
+      <form class="lcard-form" method="POST" action="{{ route('loginproses') }}" id="loginForm">
         @csrf
 
         <div class="lcard-field">
-          <label class="lcard-label" for="username">Username</label>
+          <label class="lcard-label" for="email">Email</label>
           <div class="lcard-igroup">
             <span class="lcard-igroup-pre">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
             </span>
-            <input type="text" id="username" name="username" class="lcard-input {{ $errors->has('username') ? 'has-error' : '' }}" placeholder="Masukkan username Anda" value="{{ old('username') }}" autocomplete="username" autofocus>
+            <input type="email" id="email" name="email" class="lcard-input {{ $errors->has('email') ? 'has-error' : '' }}" placeholder="Masukkan email Anda" value="{{ old('email') }}" autocomplete="email" autofocus>
           </div>
-          @error('username')<p class="lcard-err-msg">{{ $message }}</p>@enderror
+          @error('email')<p class="lcard-err-msg">{{ $message }}</p>@enderror
         </div>
 
         <div class="lcard-field">

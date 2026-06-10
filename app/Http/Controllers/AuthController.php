@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
+
+use App\Http\Requests\LoginRequest;
 
 class AuthController extends Controller
 {
@@ -12,18 +15,24 @@ class AuthController extends Controller
         return view('layouts.auth.login');
     }
 
-    public function authenticate(Request $request)
+    public function loginproses(LoginRequest $request)
     {
-        $credentials = $request->validate([
-            'username' => 'required|string',
-            'password' => 'required|string',
-        ]);
+        $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt(['name' => $credentials['username'], 'password' => $credentials['password']], $request->boolean('remember'))) {
+        if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']], $request->boolean('remember'))) {
             $request->session()->regenerate();
+            Alert::success('Berhasil', 'Selamat datang kembali, ' . Auth::user()->name);
             return redirect()->intended('/dashboard');
         }
 
-        return back()->with('error', 'Username atau password salah. Silakan coba lagi.')->withInput(['username' => $request->username]);
+        Alert::error('Gagal', 'email atau password salah. Silakan coba lagi.');
+        return back()->withInput(['email' => $request->email]);
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        Alert::success('Logout', 'Anda Berhasil Logout');
+        return redirect()->route('login');
     }
 }
