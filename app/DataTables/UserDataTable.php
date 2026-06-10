@@ -42,6 +42,9 @@ class UserDataTable extends DataTable
                 return '<span class="badge rounded-pill ' . $badgeClass . '">' . $role . '</span>';
             })
             ->addColumn('action', function ($user) {
+                if (auth()->user()->role == 'user' || auth()->user()->role == 'pimpinan') {
+                    return '';
+                }
                 $btn = '<div class="d-flex justify-content-center align-items-center" style="gap: 5px;">';
                 $btn .= '<a href="' . route('user.updatePasswordForm', $user->id) . '" class="btn btn-sm btn-info text-white rounded shadow-sm d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;" title="Update Password"><i class="fa-solid fa-key" style="font-size: 11px;"></i></a>';
                 $btn .= '<a href="' . route('user.edit', $user->id) . '" class="btn btn-sm btn-warning text-white rounded shadow-sm d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;" title="Edit"><i class="fa-solid fa-pen-to-square" style="font-size: 11px;"></i></a>';

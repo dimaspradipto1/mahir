@@ -12,9 +12,11 @@
     </div><!-- End Page Title -->
     <div class="card">
         <div class="card-body mt-3">
+            @if(auth()->user()->role == 'superadmin' || auth()->user()->role == 'admin')
             <div class="mb-3">
                 <a href="{{ route('user.create') }}" class="btn btn-primary btn-sm px-3 py-2 rounded">Tambah</a>
             </div>
+            @endif
             <div class="table-responsive">
                 {{ $dataTable->table([
                     'class' => 'table table-hover align-middle',

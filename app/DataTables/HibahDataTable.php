@@ -48,6 +48,9 @@ class HibahDataTable extends DataTable
                 return '-';
             })
             ->addColumn('action', function ($row) {
+                if (auth()->user()->role == 'user' || auth()->user()->role == 'pimpinan') {
+                    return '';
+                }
                 $btn = '<div class="d-flex justify-content-center align-items-center" style="gap: 5px;">';
                 $btn .= '<a href="' . route('hibah.edit', $row->id) . '" class="btn btn-sm btn-warning text-white rounded shadow-sm d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;" title="Edit"><i class="fa-solid fa-pen-to-square" style="font-size: 11px;"></i></a>';
                 $btn .= '<form action="' . route('hibah.destroy', $row->id) . '" method="POST" class="m-0">' . csrf_field() . method_field('DELETE') . '<button type="submit" class="btn btn-danger btn-sm rounded shadow-sm d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;" title="Hapus" onclick="return confirm(\'Yakin ingin menghapus data ini?\')"><i class="fa-solid fa-trash-can" style="font-size: 11px;"></i></button></form>';
